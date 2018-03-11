@@ -10,6 +10,64 @@
 ?>$(document).ready(function() {
   var $el = $('div.tabsAction').first();
   
+  $(document).on("contextmenu",function(e){
+        if(e.target.nodeName != "INPUT" && e.target.nodeName != "TEXTAREA") {
+          		e.preventDefault();
+  		
+		var X = e.originalEvent.clientX;
+		var Y = e.originalEvent.clientY;
+
+		$ul = $('<ul style="float:left;"></ul>');
+	    $('div.tabsAction:first').find('a,#action-clone').each(function(i,item) {
+        	$item = $(item);
+       		var $a = $item.clone(true, true);
+        	$a.addClass('butAction');
+      		$li = $('<li />');
+      		$li.append($a);
+    
+       		$ul.append($li);
+		});
+		
+		$ul2 = $('<ul style="float:left;"></ul>');
+	    
+	    $('div.fiche div.tabs:first>div.tabsElem').find('a,#action-clone').each(function(i,item) {
+        	$item = $(item);
+       		var $a = $item.clone(true, true);
+        	$a.addClass('butAction');
+      		$li = $('<li />');
+      		$li.append($a);
+    
+       		$ul2.append($li);
+		});
+			
+		$("#upbuttons-contextmenu").remove();
+		$div = $('<div id="upbuttons-contextmenu"></div>');
+
+		if($ul.html()!="") $div.append($ul);
+		if($ul2.html()!="") $div.append($ul2);
+		$div.append('<div style="clear:both"></div>');
+		
+		$('body').append($div);
+		
+		var top = Y - $div.find('ul:first').height()/2;
+		var left =  X-$div.width()/2;
+		if(top<0) top = 0;
+		if(left<0) left = 0;
+		
+		
+		$div.css({
+			top:top
+			,left:left
+			,position:'fixed'
+			,'z-index':999
+			
+		}).mouseleave(function() {
+			$(this).remove();
+		});
+  	}
+  
+  });
+  
   <?php
   	if(!empty($user->rights->upbuttons->UseAllButton)) {
   		echo '$("body").append("'.addslashes('<a href="javascript:;" id="justOneButton" style="display:none;">'.img_picto('','all@upbuttons').'</a>').'");';
