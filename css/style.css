@@ -49,6 +49,10 @@ body.upbutton-allow-sticky-tab div.tabs {
 	transition: font-size 0.1s ease-out;
 }
 
+body.sidebar-collapse.upbutton-allow-sticky-tab div.tabs {
+	top: 0px;
+}
+
 body.upbutton-allow-sticky-tab div.tabs.nav-container-sticky {
 	border-bottom: 1px solid #BBB;
 	z-index: 99;
