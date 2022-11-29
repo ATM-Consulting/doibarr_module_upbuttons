@@ -140,6 +140,14 @@ if( !empty($conf->global->UPBUTTON_STICKY_TAB)) {
 		if ('IntersectionObserver' in window) {
 			// Skicky tabs animation
 			var observer = new IntersectionObserver(function (entries) {
+				let h = document.documentElement,
+					b = document.body;
+				// si le scroll est inférieur à 300 px alors pas de sticky
+				if( (h['scrollHeight']||b['scrollHeight']) - h.clientHeight < 300){
+					document.querySelector("div.tabs").classList.remove("nav-container-sticky");
+					return;
+				}
+
 				if (entries[0].intersectionRatio === 0) {
 					document.querySelector("div.tabs").classList.add("nav-container-sticky");
 					$('.nav-container-sticky').css('top', $("#id-top").outerHeight() + 'px');
